@@ -1,0 +1,61 @@
+timestamp, log_level, message
+2025-02-13 11:47:22, CRITICAL, Flight delayed due to weather conditions.
+2025-02-13 11:02:32, CRITICAL, Flight cancelled due to technical issues.
+2025-02-13 10:07:35, NOTICE, Flight delayed due to air traffic.
+2025-02-13 11:19:44, CRITICAL, Flight diverted to another airport.
+2025-02-13 11:57:49, NOTICE, Flight delayed due to maintenance.
+2025-02-13 11:10:44, UPDATE, Flight departed on time.
+2025-02-13 11:45:15, CRITICAL, Flight delayed due to crew unavailability.
+2025-02-13 11:43:08, UPDATE, Flight arrived on time.
+2025-02-13 10:47:24, CRITICAL, Flight delayed due to security issues.
+2025-02-13 11:03:52, NOTICE, Flight delayed due to baggage handling.
+2025-02-13 10:32:37, UPDATE, Flight boarding completed.
+2025-02-13 10:23:05, NOTICE, Flight delayed due to weather conditions.
+2025-02-13 11:36:46, UPDATE, Flight in the air.
+2025-02-13 11:35:20, CRITICAL, Flight delayed due to technical issues.
+2025-02-13 11:21:47, NOTICE, Flight delayed due to air traffic.
+2025-02-13 10:09:07, CRITICAL, Flight cancelled due to weather conditions.
+2025-02-13 11:33:02, UPDATE, Flight landed safely.
+2025-02-13 11:57:35, UPDATE, Flight on schedule.
+2025-02-13 10:07:17, UPDATE, Flight boarding started.
+2025-02-13 11:29:52, UPDATE, Flight departed on time.
+2025-02-13 10:45:32, CRITICAL, Flight delayed due to crew unavailability.
+2025-02-13 10:05:51, CRITICAL, Flight cancelled due to technical issues.
+2025-02-13 11:23:58, UPDATE, Flight arrived on time.
+2025-02-13 11:10:41, CRITICAL, Flight delayed due to weather conditions.
+2025-02-13 11:13:15, CRITICAL, Flight cancelled due to technical issues.
+2025-02-13 10:10:41, CRITICAL, Flight delayed due to air traffic.
+2025-02-13 10:07:56, UPDATE, Flight boarding completed.
+2025-02-13 11:16:41, NOTICE, Flight delayed due to maintenance.
+2025-02-13 10:31:08, CRITICAL, Flight delayed due to security issues.
+2025-02-13 10:49:07, UPDATE, Flight in the air.
+2025-02-13 10:51:13, UPDATE, Flight on schedule.
+2025-02-13 11:32:26, UPDATE, Flight landed safely.
+2025-02-13 10:20:52, UPDATE, Flight boarding started.
+2025-02-13 11:28:18, NOTICE, Flight delayed due to baggage handling.
+2025-02-13 10:53:35, CRITICAL, Flight delayed due to crew unavailability.
+2025-02-13 11:27:28, CRITICAL, Flight delayed due to technical issues.
+2025-02-13 11:20:27, CRITICAL, Flight delayed due to weather conditions.
+2025-02-13 10:24:09, CRITICAL, Flight cancelled due to technical issues.
+2025-02-13 10:29:03, UPDATE, Flight departed on time.
+2025-02-13 11:43:21, CRITICAL, Flight delayed due to security issues.
+2025-02-13 10:53:08, UPDATE, Flight boarding completed.
+2025-02-13 10:09:49, UPDATE, Flight in the air.
+2025-02-13 10:51:01, CRITICAL, Flight delayed due to crew unavailability.
+2025-02-13 11:27:04, CRITICAL, Flight delayed due to technical issues.
+2025-02-13 11:21:43, CRITICAL, Flight delayed due to weather conditions.
+2025-02-13 11:09:58, UPDATE, Flight landed safely.
+2025-02-13 11:27:11, NOTICE, Flight delayed due to maintenance.
+2025-02-13 11:44:44, CRITICAL, Flight delayed due to security issues.
+2025-02-13 10:08:14, UPDATE, Flight boarding started.
+2025-02-13 11:10:26, UPDATE, Flight on schedule.
+2025-02-13 11:37:21, CRITICAL, Flight delayed due to technical issues.
+2025-02-13 10:24:44, CRITICAL, Flight cancelled due to technical issues.
+2025-02-13 11:28:33, NOTICE, Flight delayed due to baggage handling.
+2025-02-13 11:35:30, CRITICAL, Flight delayed due to crew unavailability.
+2025-02-13 10:44:55, UPDATE, Flight in the air.
+2025-02-13 11:30:03, CRITICAL, Flight delayed due to weather conditions.
+2025-02-13 11:38:40, UPDATE, Flight landed safely.
+2025-02-13 10:53:33, CRITICAL, Flight delayed due to security issues.
+2025-02-13 10:53:16, NOTICE, Flight delayed due to maintenance.
+2025-02-13 11:18:26, UPDATE, Flight on schedule.
