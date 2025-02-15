@@ -1,0 +1,21 @@
+ubh01@ubh01:~/sunil/interimProject$ python3 spark/spark_consumer.py 
+25/02/14 00:45:20 WARN Utils: Your hostname, ubh01 resolves to a loopback address: 127.0.1.1; using 10.0.2.15 instead (on interface enp0s3)
+25/02/14 00:45:20 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+25/02/14 00:45:20 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+Traceback (most recent call last):
+  File "spark/spark_consumer.py", line 5, in <module>
+    spark = SparkSession.builder.appName("KafkaSparkConsumer").getOrCreate()
+  File "/home/ubh01/.local/lib/python3.6/site-packages/pyspark/sql/session.py", line 228, in getOrCreate
+    sc = SparkContext.getOrCreate(sparkConf)
+  File "/home/ubh01/.local/lib/python3.6/site-packages/pyspark/context.py", line 392, in getOrCreate
+    SparkContext(conf=conf or SparkConf())
+  File "/home/ubh01/.local/lib/python3.6/site-packages/pyspark/context.py", line 147, in __init__
+    conf, jsc, profiler_cls)
+  File "/home/ubh01/.local/lib/python3.6/site-packages/pyspark/context.py", line 226, in _do_init
+    str(self._jvm.PythonUtils.getPythonAuthSocketTimeout(self._jsc))
+  File "/home/ubh01/.local/lib/python3.6/site-packages/py4j/java_gateway.py", line 1548, in __getattr__
+    "{0}.{1} does not exist in the JVM".format(self._fqn, name))
+py4j.protocol.Py4JError: org.apache.spark.api.python.PythonUtils.getPythonAuthSocketTimeout does not exist in the JVM

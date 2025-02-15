@@ -1,0 +1,58 @@
+The error **`py4j.protocol.Py4JError: org.apache.spark.api.python.PythonUtils.getPythonAuthSocketTimeout does not exist in the JVM`** happens because **your PySpark version (3.2.4) was previously installed and may have left behind incompatible dependencies**. Since you downgraded PySpark to **3.0.3**, let's ensure all dependencies are properly aligned.  
+
+---
+
+### **✅ Fix: Fully Reinstall PySpark & Dependencies**
+Try these steps in order:
+
+#### **1️⃣ Uninstall PySpark & Clean Cache**
+```bash
+pip uninstall pyspark -y
+rm -rf ~/.local/lib/python3.6/site-packages/pyspark
+```
+
+#### **2️⃣ Reinstall PySpark (Matching Spark 3.0.3)**
+```bash
+pip install pyspark==3.0.3
+```
+
+#### **3️⃣ Clear PySpark Cache (Optional)**
+```bash
+rm -rf ~/.ivy2/
+rm -rf ~/.spark/
+```
+
+#### **4️⃣ Verify PySpark Version**
+```python
+import pyspark
+print(pyspark.__version__)
+```
+Ensure it prints **3.0.3**.
+
+---
+
+### **✅ Fix: Run Spark with Correct Python Version**
+Your system might be using **Python 3.6**, which is quite old. If you have Python 3.8+ installed, run Spark with:
+
+```bash
+export PYSPARK_PYTHON=python3
+export SPARK_LOCAL_IP=127.0.0.1
+python3 spark/spark_consumer.py
+```
+
+---
+
+### **✅ Fix: Run Spark with `spark-submit` Instead of `python3`**
+Instead of:
+```bash
+python3 spark/spark_consumer.py
+```
+Try:
+```bash
+spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.3 spark/spark_consumer.py
+```
+This ensures Spark loads the **Kafka Structured Streaming** dependency.
+
+---
+
+Try these steps and let me know what works! 🚀
