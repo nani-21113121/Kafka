@@ -1,25 +1,48 @@
+import json
+from kafka import KafkaConsumer
+from pyspark.sql import SparkSession
 from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
-from pyspark.streaming.kafka import KafkaUtils
 
-# Initialize SparkContext and StreamingContext
-sc = SparkContext(appName="KafkaFlightConsumer")
-ssc = StreamingContext(sc, 5)  # 5 seconds batch interval
+# Initialize Spark
+spark = SparkSession.builder.appName("KafkaRDDAnalysis").getOrCreate()
+sc = spark.sparkContext
 
-# Create Direct Kafka Stream
-kafkaStream = KafkaUtils.createDirectStream(ssc, ['flight-data'], {"metadata.broker.list": 'localhost:9092'})
+# Kafka Config
+KAFKA_BROKER = "localhost:9092"
+KAFKA_TOPIC = "flight-data"
 
-# Extract data from Kafka Stream
-kafkaRDD = kafkaStream.map(lambda message: message[1])
+# Initialize Kafka Consumer
+consumer = KafkaConsumer(
+    KAFKA_TOPIC,
+    bootstrap_servers=[KAFKA_BROKER],
+    auto_offset_reset="earliest",
+    value_deserializer=lambda x: json.loads(x.decode("utf-8")),
+)
 
-# Perform operations on RDD
-# Example: Count occurrences of each flight status
-flightStatusRDD = kafkaRDD.map(lambda flight: (flight.split(",")[6], 1))  # Assuming flight status is the 7th field
-flightStatusCounts = flightStatusRDD.reduceByKey(lambda x, y: x + y)
+# Collect incoming flight data
+flight_data_list = []
 
-# Print counts to console
-flightStatusCounts.pprint()
+print("Consuming messages from Kafka...")
 
-# Start the streaming context and await termination
-ssc.start()
-ssc.awaitTermination()
+for message in consumer:
+    flight_data_list.append(message.value)
+    
+    # Process data in RDD after receiving 10 messages
+    if len(flight_data_list) >= 10:
+        # Convert list to RDD
+        flight_rdd = sc.parallelize(flight_data_list)
+
+        # Extract Flight Status and Airline
+        status_rdd = flight_rdd.map(lambda x: (x["FlightStatus"], 1))
+        airline_rdd = flight_rdd.map(lambda x: (x["Airline"], 1))
+
+        # Count occurrences using reduceByKey
+        status_count = status_rdd.reduceByKey(lambda a, b: a + b).collect()
+        airline_count = airline_rdd.reduceByKey(lambda a, b: a + b).collect()
+
+        # Display analysis
+        print("\nFlight Status Count (RDD):", status_count)
+        print("\nMost Frequent Airlines (RDD):", airline_count)
+
+        # Clear data for fresh batch processing
+        flight_data_list = []
