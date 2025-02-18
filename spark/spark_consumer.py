@@ -1,26 +1,37 @@
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, expr
+import json
+import pandas as pd
+from kafka import KafkaConsumer
 
-# Initialize Spark Session
-spark = SparkSession.builder.appName("KafkaSparkConsumer").getOrCreate()
+# Kafka configurations
+KAFKA_BROKER = "localhost:9092"
+KAFKA_TOPIC = "flight-data"
 
-# Read stream from Kafka
-df = spark.readStream \
-    .format("kafka") \
-    .option("kafka.bootstrap.servers", "localhost:9092") \
-    .option("subscribe", "flight-data") \
-    .load()
+# Initialize Kafka Consumer
+consumer = KafkaConsumer(
+    KAFKA_TOPIC,
+    bootstrap_servers=[KAFKA_BROKER],
+    auto_offset_reset="earliest",
+    value_deserializer=lambda x: json.loads(x.decode("utf-8")),
+)
 
-# Convert Kafka value from bytes to String
-flight_df = df.selectExpr("CAST(value AS STRING) as flight_data")
+# List to store incoming flight data
+flight_data_list = []
 
-# Parse JSON flight data
-flight_df = flight_df.selectExpr("json_tuple(flight_data, 'FlightNumber', 'Airline', 'OriginAirport', 'DestinationAirport', 'DepartureTime', 'ArrivalTime', 'FlightStatus', 'Timestamp') as (FlightNumber, Airline, OriginAirport, DestinationAirport, DepartureTime, ArrivalTime, FlightStatus, Timestamp)")
+print("Consuming messages from Kafka...")
 
-# Print structured flight data to console
-query = flight_df.writeStream \
-    .outputMode("append") \
-    .format("console") \
-    .start()
+for message in consumer:
+    flight_data_list.append(message.value)  # Append message to list
+    
+    # Convert to Pandas DataFrame after receiving some data
+    if len(flight_data_list) >= 10:  # Process after 10 messages
+        df = pd.DataFrame(flight_data_list)
+        
+        # Display first few rows
+        print("\nSample Data:\n", df.head())
 
-query.awaitTermination()
+        # Perform analysis
+        print("\nFlight Status Counts:\n", df["FlightStatus"].value_counts())
+        print("\nMost Frequent Airlines:\n", df["Airline"].value_counts())
+
+        # Clear data for fresh batch processing
+        flight_data_list = []
